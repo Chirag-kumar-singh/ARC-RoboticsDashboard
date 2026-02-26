@@ -2,6 +2,11 @@ import { useState, useEffect } from "react";
 
 export default function GiniMotorStatusPanel() {
   const [sections, setSections] = useState({});
+  const [expanded, setExpanded] = useState({});
+
+  const toggleSection = (name) => {
+    setExpanded((prev) => ({ ...prev, [name]: !prev[name] }));
+  };
 
   useEffect(() => {
     const jointNames = [
@@ -100,6 +105,10 @@ export default function GiniMotorStatusPanel() {
     });
 
     setSections(grouped);
+    // only head expanded initially
+    setExpanded(
+      Object.keys(grouped).reduce((acc, k) => ({ ...acc, [k]: k === "Head" }), {})
+    );
   }, []);
 
   return (
@@ -108,47 +117,61 @@ export default function GiniMotorStatusPanel() {
         <div key={sectionName}>
           
           {/* Section Title */}
-          <h3 style={{
-            color: "#00e5ff",
-            marginBottom: "15px",
-            borderBottom: "1px solid #1f2937",
-            paddingBottom: "5px"
-          }}>
+          <h3
+            onClick={() => toggleSection(sectionName)}
+            style={{
+              color: "#00e5ff",
+              marginBottom: "15px",
+              borderBottom: "1px solid #1f2937",
+              paddingBottom: "5px",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            <span style={{ transform: expanded[sectionName] ? "rotate(90deg)" : "none", display: "inline-block", transition: "transform 0.2s" }}>
+              ▶
+            </span>
             {sectionName}
           </h3>
 
-          {/* Motors Grid */}
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-            gap: "15px"
-          }}>
-            {motors.map((motor, index) => (
-              <div
-                key={index}
-                style={{
-                  padding: "15px",
-                  borderRadius: "10px",
-                  border: "2px solid #ff4444",
-                  background: "#0f172a",
-                  color: "#fff",
-                  textAlign: "center"
-                }}
-              >
-                <div style={{ fontSize: "12px", opacity: 0.8 }}>
-                  {motor.name}
-                </div>
+          {/* Motors Grid (collapsed if not expanded) */}
+          {expanded[sectionName] && (
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+                gap: "15px"
+              }}
+            >
+              {motors.map((motor, index) => (
+                <div
+                  key={index}
+                  style={{
+                    padding: "15px",
+                    borderRadius: "10px",
+                    border: "2px solid #ff4444",
+                    background: "#0f172a",
+                    color: "#fff",
+                    textAlign: "center"
+                  }}
+                >
+                  <div style={{ fontSize: "12px", opacity: 0.8 }}>
+                    {motor.name}
+                  </div>
 
-                <div style={{
-                  marginTop: "8px",
-                  fontWeight: "bold",
-                  color: "#ff4444"
-                }}>
-                  ● Deactive
+                  <div style={{
+                    marginTop: "8px",
+                    fontWeight: "bold",
+                    color: "#ff4444"
+                  }}>
+                    ● Deactive
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
         </div>
       ))}
