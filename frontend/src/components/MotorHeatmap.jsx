@@ -27,10 +27,18 @@ export default function MotorHeatmap() {
       }}
     >
       {motors.map((m, i) => {
-        const temp = m.temperature;
+        const temp = m.temperature ?? 0;
 
-        const color =
-          temp > 70
+        const isOff = m.mode === 0;
+        const isWorking = m.mode === 1;
+        const isHot = temp > 60;
+
+        let stateColor;
+        if (isOff) stateColor = "#6b7280"; // gray
+        else if (isHot) stateColor = "var(--red)";
+        else if (isWorking) stateColor = "var(--green)";
+        else
+          stateColor = temp > 70
             ? "var(--red)"
             : temp > 50
             ? "var(--yellow)"
@@ -43,14 +51,12 @@ export default function MotorHeatmap() {
               padding: 10,
               borderRadius: 8,
               background: "#111827",
-              border: `1px solid ${color}`,
+              border: `1px solid ${stateColor}`,
               textAlign: "center",
             }}
           >
             <div style={{ fontSize: 12 }}>M{i}</div>
-            <div style={{ color, fontSize: 18 }}>
-              {temp}°C
-            </div>
+            <div style={{ color: stateColor, fontSize: 18 }}>{temp}°C</div>
           </div>
         );
       })}

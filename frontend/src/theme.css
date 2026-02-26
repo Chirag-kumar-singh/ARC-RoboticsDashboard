@@ -148,6 +148,30 @@ html, body, #root {
   flex-direction: column;
 }
 
+/* legend for motor temperature panel */
+.motor-legend {
+  margin-top: 12px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.motor-legend .dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.motor-legend .gray {
+  background: #6b7280;
+}
+.motor-legend .green {
+  background: var(--green);
+}
+.motor-legend .red {
+  background: var(--red);
+}
+
 .battery-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -2,6 +2,7 @@ import InfosysLogo from "../components/InfosysLogo";
 import StatusPill from "../components/StatusPill";
 import TelemetryPanel from "../components/TelemetryPanel";
 
+
 export default function DashboardLayout({ children }) {
   return (
     <div className="dashboard-layout">

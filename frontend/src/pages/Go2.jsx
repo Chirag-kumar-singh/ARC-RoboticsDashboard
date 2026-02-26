@@ -36,6 +36,13 @@ export default function Go2() {
 
         <TelemetryPanel title="MOTOR TEMPERATURE">
           <MotorHeatmap />
+          <div className="metric-small" style={{ marginTop: 50 }}>
+            <div className="motor-legend" style={{ gap: 16 }}>
+              <span className="dot gray" /> Off
+              <span className="dot green" /> Working
+              <span className="dot red" /> Hot
+            </div>
+          </div>
         </TelemetryPanel>
       </div>
 
