@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"; 
+
 import InfosysLogo from "../components/InfosysLogo";
 import StatusPill from "../components/StatusPill";
 import TelemetryPanel from "../components/TelemetryPanel";
@@ -11,7 +13,9 @@ export default function DashboardLayout({ children }) {
       <div className="dashboard-header">
         <div className="dashboard-title">
           <InfosysLogo width={140} />
+          <Link to="/" className="dashboard-home-link">
           <h1>Robotics Command Center</h1>
+          </Link>
         </div>
         <StatusPill connected={true} />
       </div>

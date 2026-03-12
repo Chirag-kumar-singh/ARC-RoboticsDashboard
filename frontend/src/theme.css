@@ -262,3 +262,16 @@ html, body, #root {
   flex-direction: column;
   gap: 24px;
 }
+
+.dashboard-home-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.dashboard-home-link:visited {
+  color: inherit;
+}
+
+.dashboard-home-link:hover {
+  text-decoration: none;
+}

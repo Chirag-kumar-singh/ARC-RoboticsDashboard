@@ -9,11 +9,13 @@ import FootPressurePanel from "../components/FootPressurePanel";
 import PressureGauge from "../components/PressureGauge";
 import SensorBarChart from "../components/SensorBarChart";
 import GaugeImage from "../components/GaugeImage";
+import CameraFeed, { ZENSTREAM_HLS_URL } from "../components/CameraFeed";
 
 export default function Go2() {
 
   const [readings, setReadings] = useState([]);
   const [connected, setConnected] = useState(true);
+  const [cameraOpen, setCameraOpen] = useState(false);
 
   useEffect(() => {
     fetch("/pressure_data.json")
@@ -60,6 +62,42 @@ export default function Go2() {
             }}
           />
         </div>
+      </TelemetryPanel>
+
+      {/* CAMERA VIEW */}
+      <TelemetryPanel title="">
+        {/* header acting as dropdown toggle */}
+        <div
+          onClick={() => setCameraOpen((v) => !v)}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            cursor: "pointer",
+            color: "var(--accent)",
+            marginBottom: "12px",
+            fontSize: "13px",
+            textTransform: "uppercase",
+          }}
+        >
+          <span
+            style={{
+              transform: cameraOpen ? "rotate(90deg)" : "none",
+              display: "inline-block",
+              transition: "transform 0.2s",
+            }}
+          >
+            ▶
+          </span>
+          CAMERA FEED
+        </div>
+
+        {cameraOpen && (
+          <div style={{ height: "500px" }}>
+            {/* replace src with actual stream URL when available */}
+            <CameraFeed src={ZENSTREAM_HLS_URL} />
+          </div>
+        )}
       </TelemetryPanel>
 
       {/* ROW 2 */}
